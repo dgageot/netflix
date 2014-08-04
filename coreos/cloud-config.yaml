@@ -21,4 +21,4 @@ coreos:
         
         [Service]
         RemainAfterExit=yes
-        ExecStart=/usr/bin/docker run -p 80:3128 dgageot/netflix
+        ExecStart=/usr/bin/docker run --rm -p 80:3128 dgageot/netflix
