@@ -1,12 +1,12 @@
 # To run
-# docker run -p 7788:3128 -ti dgageot/netflix squid -N
+# docker run --rm -p 80:3128 -ti dgageot/netflix
+# docker run -p 80:3128 -d dgageot/netflix
 
 FROM google/debian:wheezy
 MAINTAINER David Gageot <david@gageot.net>
 
-ENV DEBIAN_FRONTEND noninteractive
-
-# From instructions here: http://www.ruchirablog.com/how-to-setup-fully-secure-squid-proxy-netflix-pandora-hulu/
+ENV USER didier
+ENV PASSWORD pwd
 
 # Install dependencies
 RUN apt-get update -qq
@@ -17,8 +17,8 @@ RUN apt-get install -yqq squid3
 
 # Configure
 RUN touch /etc/squid3/users
-RUN htpasswd -cb /etc/squid3/users didier pwd
 COPY squid.conf /etc/squid3/squid.conf
+COPY run.sh /bin/proxy.sh
 
 EXPOSE 3128
-ENTRYPOINT ["/usr/sbin/squid3", "-N"]
+ENTRYPOINT ["/bin/proxy.sh"]
