@@ -1,0 +1,24 @@
+#cloud-config
+
+coreos:
+  etcd:
+    discovery: https://discovery.etcd.io/9f0823eaa6721010ff46f409ca3af240
+    # multi-region and multi-cloud deployments need to use $public_ipv4
+    addr: $private_ipv4:4001
+    peer-addr: $private_ipv4:7001
+  units:
+    - name: etcd.service
+      command: start
+    - name: fleet.service
+      command: start
+    - name: docker-netflix.service
+      command: start
+      content: |
+        [Unit]
+        Description=Netflix Proxy
+        After=docker.service
+        Requires=docker.service
+        
+        [Service]
+        RemainAfterExit=yes
+        ExecStart=/usr/bin/docker run -p 80:3128 dgageot/netflix
