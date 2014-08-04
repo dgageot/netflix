@@ -6,7 +6,7 @@ FROM google/debian:wheezy
 MAINTAINER David Gageot <david@gageot.net>
 
 ENV USER didier
-ENV PASSWORD pwd
+ENV PASSWORD thatsdockerpower!
 
 # Install dependencies
 RUN apt-get update -qq
