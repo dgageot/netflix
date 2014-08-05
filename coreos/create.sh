@@ -9,4 +9,4 @@ gcutil \
 	--tags="http-server" \
 	--auto_delete_boot_disk \
 	--metadata_from_file="user-data:cloud-config.yaml" \
-	core1
+	netflix
