@@ -1,12 +1,14 @@
 #!/bin/bash
 
-gcutil \
+gcloud compute instances create netflix \
+	--project "code-story-blog" \
+	--zone "us-central1-a" \
+	--machine-type "g1-small" \
+	--image "coreos" \
+	--metadata-from-file "user-data=cloud-config.yaml" \
+	--tags "http-server"
+
+gcloud compute ssh netflix \
 	--project="code-story-blog" \
-	addinstance \
-	--image="projects/coreos-cloud/global/images/coreos-stable-367-1-0-v20140724" \
 	--zone="us-central1-a" \
-	--machine_type="g1-small" \
-	--tags="http-server" \
-	--auto_delete_boot_disk \
-	--metadata_from_file="user-data:cloud-config.yaml" \
-	netflix
+	--command 'docker events'
